@@ -5,7 +5,7 @@
  */
 
 var app = require('./server/config/app');
-var debug = require('debug')('classproject:server');
+var debug = require('debug')('Shopping-List:server');
 var http = require('http');
 
 /**

@@ -1,16 +1,18 @@
 var express = require('express');
 var router = express.Router();
+//const { router } = require('../config/app');
 
 // Connect with book model
+let Book = require('../models/Bio_books');
 let BookController = require('../controllers/Bio_books')
 let mongoose = require('mongoose');
 
 // helper function
 function requireAuth(req,res,next){
     if(!req.isAuthenticated())
-    {
-        return res.redirect('/login')
-    }
+        {
+            return res.redirect('/login')
+        }
     next();
 }
 

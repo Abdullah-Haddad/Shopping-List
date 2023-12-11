@@ -34,15 +34,16 @@ router.post('/login',function(req,res,next){
         'AuthenticationError');
         return res.redirect('/login')
       }
-      req.login(user,(err)=>{
+      req.login(User,(err)=>{
         if(err)
         {
           return next(err)
         }
         return res.redirect('/shopping-list');
       })
-  }) (req,res,next)
+  })(req,res,next)
 })
+
 
 // Get & Post Register Page
 router.get('/register',function(req,res,next){
@@ -56,40 +57,40 @@ router.get('/register',function(req,res,next){
     })
   }
   else{
-    return res.redirect('/')
+    return res.redirect('/home')
   }
 })
 router.post('/register', function(req,res,next){
   let newUser = new User({
     username: req.body.username,
-    password: req.body.password,
+    // password: req.body.password,
     email: req.body.email,
     displayName: req.body.displayName
   })
   User.register(newUser, req.body.password,(err) => {
     if(err)
+    {
+      console.log("Error in inserting new User");
+      if(err.name =='UserExistError')
       {
-        console.log("Error in inserting new User");
-        if(err.name =='UserExistError')
-          {
-            req.flash('registerMessage',
-            'Registration Error : User already Exist'
-          )}
-        return res.render('auth/register',
-          {
-            title:'Register',
-            message: req.flash('registerMessage'),
-            displayName: req.user ? req.user.displayName:''
-          })
-      }
-    else
+        req.flash('registerMessage',
+        'Registration Error : User already Exist'
+      )}
+      return res.render('auth/register',
       {
-        return passport.authenticate('local')(req,res,()=>{
-          res.redirect('/shopping-list');
-        })
-      }
+        title:'Register',
+        message: req.flash('registerMessage'),
+        displayName: req.user ? req.user.displayName:''
+      })
+    }
+    else{
+      return passport.authenticate('local')(req,res,()=>{
+        res.redirect('/shopping-list');
+      })
+    }
   })
 })
+
 
 // Get Logout Page
 router.get('/logout',function(req,res,next){
@@ -99,13 +100,13 @@ router.get('/logout',function(req,res,next){
       return next(err);
     }
   })
-  res.redirect('/')
+  res.redirect('/home')
 })
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', {
+  res.render('index', { 
     title: 'Home',
     displayName: req.user ? req.user.displayName:''  
   });

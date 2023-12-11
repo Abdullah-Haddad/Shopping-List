@@ -4,7 +4,6 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 var router = express.Router();
-
 let app = express();
 let session = require('express-session');
 let passport = require('passport');
@@ -57,7 +56,7 @@ passport.deserializeUser(User.deserializeUser);
 app.use(passport.initialize());
 app.use(passport.session());
 
-let indexRouter = require('../routes/index');
+let indexRouter = require('../routes');
 let usersRouter = require('../routes/users');
 let BooksRouter = require('../routes/Bio_books');
 

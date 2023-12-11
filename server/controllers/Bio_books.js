@@ -7,7 +7,7 @@ module.exports.DislayBooklist = async (req,res,next)=>{ //< Mark function as asy
         {
         const BookList = await Book.find(); //< Use of await keyword
             res.render('book/list', {
-                title: 'Products List', 
+                title: 'Shopping List', 
                 BookList: BookList,
                 displayName: req.user ? req.user.displayName:''
             });

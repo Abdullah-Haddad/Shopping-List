@@ -6,6 +6,15 @@ let logger = require('morgan');
 var router = express.Router();
 
 let app = express();
+let session = require('express-session');
+let passport = require('passport');
+let passportLocal = require('passport-local');
+let localStrategy = passportLocal.Strategy;
+let flash = require('connect-flash');
+
+// Create a user model instance
+let userModel = require('../models/user');
+let User = userModel.User;
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));
@@ -21,11 +30,33 @@ app.use(express.static(path.join(__dirname, '../../node_modules')));
 let mongoose = require('mongoose');
 let mongoDB = mongoose.connection;
 let DB = require('./db');
-//mongoose.connect('mongodb://127.0.0.1:27017/BookLib');
+
+// "URI":"mongodb+srv://abdullahhaddad:r2DH9Yk5oIdl2VxE@products.hadldw9.mongodb.net/products?retryWrites=true&w=majority"
 mongoose.connect(DB.URI);
 mongoDB.on('error',console.error.bind(console,'Connection Error'));
 mongoDB.once('open',()=>{console.log("Mongo DB is connected")});
-//mongoose.connect(DB.URI);
+
+// Set-up Express Session
+app.use(session({
+  secret: "SomeSecret",
+  saveUninitialized:false,
+  resave:false
+}))
+
+// Initialize flash
+app.use(flash());
+
+// Implement a User Authentication
+passport.use(User.createStrategy());
+
+// Serialize and deserialize  the user information
+passport.serializeUser(User.serializeUser);
+passport.deserializeUser(User.deserializeUser);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 let indexRouter = require('../routes/index');
 let usersRouter = require('../routes/users');
 let BooksRouter = require('../routes/Bio_books');

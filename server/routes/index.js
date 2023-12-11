@@ -21,14 +21,14 @@ router.get('/login',function(req,res,next){
   }
 })
 router.post('/login',function(req,res,next){
-  passport.authenticate('local',function(err,user,info){
+  passport.authenticate('local',function(err,User,info){
       // server error
       if(err)
       {
         return next(err);
       }
       // login error
-      if(!user)
+      if(!User)
       {
         req.flash('loginMessage',
         'AuthenticationError');

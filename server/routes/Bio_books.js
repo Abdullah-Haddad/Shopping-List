@@ -3,8 +3,7 @@ var router = express.Router();
 //const { router } = require('../config/app');
 
 // Connect with book model
-let Book = require('../models/Bio_books');
-let BookController = require('../controllers/Bio_books')
+let Controller = require('../controllers/Bio_books')
 let mongoose = require('mongoose');
 
 // helper function
@@ -19,16 +18,16 @@ function requireAuth(req,res,next){
         /* CRUD Operation*/
 /* Get route for the Bio Books list */
 // Read Operation
-router.get('/', BookController.DislayBooklist);
+router.get('/', Controller.DislayProductlist);
 /* Get route for Add Book page --> Create */
-router.get('/add', requireAuth, BookController.AddBook); 
+router.get('/add', requireAuth, Controller.AddProduct); 
 /* Post route for Add Book page --> Create */
-router.post('/add', requireAuth, BookController.ProcessBook);
+router.post('/add', requireAuth, Controller.ProcessProduct);
 /* Get route for displaying the Edit Book page --> Update */
-router.get('/edit/:id', requireAuth, BookController.EditBook);
+router.get('/edit/:id', requireAuth, Controller.EditProduct);
 /* Post route for processing the Edit Book page --> Update */
-router.post('/edit/:id', requireAuth, BookController.ProcessEditBook);
+router.post('/edit/:id', requireAuth, Controller.ProcessEditProduct);
 /* Get to perform Delete Operation --> Delete Operation */
-router.get('/delete/:id', requireAuth, BookController.DeleteBook);
+router.get('/delete/:id', requireAuth, Controller.DeleteProduct);
 
 module.exports = router;

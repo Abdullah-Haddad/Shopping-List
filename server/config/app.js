@@ -4,6 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 var router = express.Router();
+
 let app = express();
 let session = require('express-session');
 let passport = require('passport');
@@ -30,7 +31,7 @@ let mongoose = require('mongoose');
 let mongoDB = mongoose.connection;
 let DB = require('./db');
 
-// "URI":"mongodb+srv://abdullahhaddad:r2DH9Yk5oIdl2VxE@products.hadldw9.mongodb.net/products?retryWrites=true&w=majority"
+// mongodb+srv://abdullahhaddad:r2DH9Yk5oIdl2VxE@Books.hadldw9.mongodb.net/Books?retryWrites=true&w=majority
 mongoose.connect(DB.URI);
 mongoDB.on('error',console.error.bind(console,'Connection Error'));
 mongoDB.once('open',()=>{console.log("Mongo DB is connected")});
@@ -56,13 +57,13 @@ passport.deserializeUser(User.deserializeUser);
 app.use(passport.initialize());
 app.use(passport.session());
 
-let indexRouter = require('../routes');
+let indexRouter = require('../routes/index');
 let usersRouter = require('../routes/users');
 let BooksRouter = require('../routes/Bio_books');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/shopping-list', BooksRouter);
+app.use('/shoppinglist', BooksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

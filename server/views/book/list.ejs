@@ -8,7 +8,7 @@
             <h1>Shopping List</h1>
             <!-- Display Button only if logged in -->
             <% if (typeof displayName == 'string' && displayName) { %>
-                <a href="/shopping-list/add" class="btn btn-primary" 
+                <a href="/shoppinglist/add" class="btn btn-primary" 
                 role="button"><i class="fas fa-plus-circle"></i> Add an Item</a>
                 <br>
             <% } %>
@@ -40,12 +40,12 @@
                             <td class="text-center col-4"><%= BookList[count].Description %></td>
                             <td class="text-center col-1"><%= BookList[count].Price %></td>
                             <td class="text-center col-1">
-                                <a href="/shopping-list/edit/<%= BookList[count]._id %>"
+                                <a href="/shoppinglist/edit/<%= BookList[count]._id %>"
                                     class="btn btn-primary">
                                     <i class="fas fa-pencil-alt"></i> Edit </a>
                             </td>
                             <td class="text-center col-1">
-                                <a href="/shopping-list/delete/<%= BookList[count]._id %>"
+                                <a href="/shoppinglist/delete/<%= BookList[count]._id %>"
                                     class="btn btn-danger">
                                     <i class="fas fa-trash-alt"></i> Delete </a>
                             </td>
